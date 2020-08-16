@@ -1,7 +1,8 @@
-// import api from '../../api/back'
+import api from '../../api/back'
+import { router } from '../../main'
 
 const state = {
-    token: null
+    token: window.localStorage.getItem('back_token')
 };
 
 const getters = {
@@ -9,7 +10,29 @@ const getters = {
 };
 
 const actions = {
+    async loginSubmit ({ commit }, form) {
+        const response = await api.login(form);
+        if ((response.data.token)){
+            commit('setToken', response.data.token);
+            window.localStorage.setItem('back_token', response.data.token);
+            router.push('/profile');
+        }else{
+            alert('Email or password wrong!');
+        }
 
+        // console.log(response);
+        // alert(form.email);
+    },
+    finalizeLogin: ({ commit }, token) => {
+        commit('setToken', token);
+        window.localStorage.setItem('back_token', token);
+        router.push('/profile');
+    },
+    logout: ({ commit }) => {
+        commit('setToken', null);
+        window.localStorage.removeItem('back_token');
+        router.push('/');
+    }
 };
 
 const mutations = {
