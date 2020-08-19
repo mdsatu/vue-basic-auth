@@ -1,6 +1,6 @@
 <template>
   <b-container class="py-5">
-    <b-form @submit.prevent="onSubmit">
+    <b-form @submit.prevent="loginSubmit(form)">
       <h2 class="text-center mb-3">login to your account</h2>
       <b-row class="justify-content-center">
         <b-col cols="5">
@@ -69,15 +69,15 @@
     },
     computed: mapGetters(['isLoggedIn']),
     methods: {
-      onSubmit() {
-        this.loginSubmit(this.form);
+      // onSubmit() {
+      //   this.loginSubmit(this.form);
       //   // this.form.post('http://laqs.me/api/login')
       //   // .then((result) => {
       //   //   // console.log(result);
       //   //   this.finalizeLogin(result.data.token);
       //   // })
       //   // .catch(() => console.log('Something wrong!'));
-      },
+      // },
       // ...mapActions(['loginSubmit'])
       ...mapActions(['loginSubmit'])
     }

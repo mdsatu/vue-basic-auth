@@ -4,6 +4,7 @@ import App from './App.vue'
 import store from './store';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
+
 Vue.use(VueRouter);
 import Login from './components/Login.vue'
 import Profile from './components/Profile.vue'
