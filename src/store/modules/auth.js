@@ -23,15 +23,22 @@ const actions = {
         // console.log(response);
         // alert(form.email);
     },
-    finalizeLogin: ({ commit }, token) => {
-        commit('setToken', token);
-        window.localStorage.setItem('back_token', token);
-        router.push('/profile');
-    },
-    logout: ({ commit }) => {
-        commit('setToken', null);
-        window.localStorage.removeItem('back_token');
-        router.push('/');
+    // finalizeLogin: ({ commit }, token) => {
+    //     commit('setToken', token);
+    //     window.localStorage.setItem('back_token', token);
+    //     router.push('/profile');
+    // },
+    async logout({ state, commit }) {
+        // Logout Request
+        const response = await api.logout(state.token);
+
+        if (response.status){
+            commit('setToken', null);
+            window.localStorage.removeItem('back_token');
+            router.push('/');
+        }else{
+            alert('Something wrong!');
+        }
     }
 };
 

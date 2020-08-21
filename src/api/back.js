@@ -15,12 +15,19 @@ export default {
         // })
         // .catch(() => alert('Something wrong!'));
     },
+    logout(token){
+        return axios.post(`${ROOT_URL}/logout`, null, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    },
     fetchProfile(token){
         return axios.get(`${ROOT_URL}/me`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        });
+        }).catch(() => alert('Something Wring!'));
     },
     updateProfile(token, form){
         return form.post(`${ROOT_URL}/me`, {

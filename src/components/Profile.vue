@@ -6,7 +6,7 @@
       <b-row class="text-left">
         <b-col cols=12>
           <div class="my-3">
-            <b-img :src="profileInfo.image ? `http://laqs.me/api/uploads/admin/${profileInfo.image}` : 'https://picsum.photos/125/125/?image=58'" rounded="circle" alt="Center image"></b-img>
+            <b-img :src="profileInfo.image ? `http://laqs.me/uploads/admin/${profileInfo.image}` : 'https://picsum.photos/125/125/?image=58'" rounded="circle" alt="Center image"></b-img>
           </div>
         </b-col>
         <b-col cols="2"><b>First Name</b></b-col>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="mt-5">
-      <b-modal id="modal-1" title="Edit Profile">
+      <b-modal id="modal-1" hide-footer title="Edit Profile">
         <b-form @submit.prevent="updateProfile(form)">
           <b-form-group
             id="input-group-1"
@@ -107,11 +107,11 @@
             label-for="input-profile_picture"
           >
             <b-form-file 
-              v-model="form.profile_picture"
               class="mt-3"
               plain
               :class="{ 'is-invalid': form.errors.has('mobile_number') }"
               accept="image/*"
+              @change="thumbnailImage"
             ></b-form-file>
             <has-error :form="form" field="profile_picture"></has-error>
           </b-form-group>
@@ -154,7 +154,17 @@
       ...mapActions(['logout', 'fetchProfile', 'updateProfile']),
       fillForm(formData){
         this.form.fill(formData);
-      }
+      },
+      thumbnailImage(e){
+          let file = e.target.files[0];
+          const reader = new FileReader();
+
+          reader.onloadend = (file) => {
+              // console.log(file.target.result);
+              this.form.profile_picture = file.target.result;
+          };
+          reader.readAsDataURL(file);
+      },
     },
     created() {
       this.fetchProfile();
